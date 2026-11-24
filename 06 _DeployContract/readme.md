@@ -12,6 +12,8 @@ tags:
 
 # Ethers极简入门: 6. 部署合约
 
+运行脚本需要 web3.py 7、`SEPOLIA_RPC_URL` 和 `TESTNET_PRIVATE_KEY`。私钥应来自专用测试钱包。
+
 **WTF Academy社群：** [官网 wtf.academy](https://wtf.academy) | [WTF Solidity教程](https://github.com/AmazingAng/WTF-Solidity) | [discord](https://discord.gg/5akcruXrsk) | [微信群申请](https://docs.google.com/forms/d/e/1FAIpQLSe4KGT8Sh6sJ7hedQRuIYirOoZK_85miz3dw7vA1-YjodgJ-A/viewform?usp=sf_link)
 
 
@@ -36,9 +38,9 @@ contract_factory = w3.eth.contract(abi=abi, bytecode=bytecode)
 在创建好合约工厂实例之后，可以调用它的`constructor`函数并传入合约构造函数的参数`args`来构建部署交易信息：
 ```py
 # 部署合约
-tx_hash = contract_factory.constructor(args).transact()
+tx_hash = contract_factory.constructor(*args).transact()
 # 等待交易完成
-tx_receipt = w3.eth.waitForTransactionReceipt(tx_hash)
+tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
 #打印合约地址
 contract_address = tx_receipt['contractAddress']
 ```
@@ -52,11 +54,12 @@ contract_address = tx_receipt['contractAddress']
     from eth_account import Account
     from web3 import Web3, contract
     # 连利用infura提供的节点连接到以太坊测试网
-    infura_url = "https://goerli.infura.io/v3/22b26b228b004ccc9325066db8b5c468"
+    import os
+    infura_url = os.environ["SEPOLIA_RPC_URL"]
     w3 = Web3(Web3.HTTPProvider(infura_url))
 
     # 创建钱包对象
-    private_key = "e08ca922fedbc3d37fa677f1d8f7e8fcbe42d031186bcbbc763d20cbdac81f9d"
+    private_key = os.environ["TESTNET_PRIVATE_KEY"]
     wallet = Account.from_key(private_key)
     ```
 
@@ -100,9 +103,9 @@ contract_address = tx_receipt['contractAddress']
         'gasPrice': w3.to_wei('50', 'gwei')
     })
 
-    signed_tx = wallet.signTransaction(tx_hash)
+    signed_tx = wallet.sign_transaction(tx_hash)
 
-    tx_hash = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
+    tx_hash = w3.eth.send_raw_transaction(signed_tx.raw_transaction)
     tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
 
     # 获取部署的合约地址
@@ -130,9 +133,9 @@ contract_address = tx_receipt['contractAddress']
         'gasPrice': w3.to_wei('50', 'gwei')
     })
 
-    signed_tx = wallet.signTransaction(tx_hash)
+    signed_tx = wallet.sign_transaction(tx_hash)
 
-    tx_hash = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
+    tx_hash = w3.eth.send_raw_transaction(signed_tx.raw_transaction)
     tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
 
     print("铸造代币成功")
@@ -154,9 +157,9 @@ contract_address = tx_receipt['contractAddress']
         'gasPrice': w3.to_wei('50', 'gwei')
     })
 
-    signed_tx = wallet.signTransaction(tx_hash)
+    signed_tx = wallet.sign_transaction(tx_hash)
 
-    tx_hash = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
+    tx_hash = w3.eth.send_raw_transaction(signed_tx.raw_transaction)
     tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
 
     print("等待交易上链")

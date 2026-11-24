@@ -30,7 +30,7 @@ tags:
 
 以太坊节点提供了 `eth_call`方法，可以在不发送交易（不消耗gas费）的情况下，模拟合约调用的结果，从而检查合约调用是否会失败。
 
-`web3.py`中的 `ContractFunction.call`、`ContractFunction.estimate_gas`、`Contract.fallback.call`等都是基于 `eth_call`API实现的。
+`ContractFunction.call` 和 `Contract.fallback.call` 使用 `eth_call` 模拟执行，模拟写入不会保存到链上。`ContractFunction.estimate_gas` 使用 `eth_estimateGas` 估算所需 gas。RPC 模拟与 EVM 的 `STATICCALL` 指令含义不同。
 
 ## `call`
 

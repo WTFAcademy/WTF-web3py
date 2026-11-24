@@ -100,7 +100,7 @@ tx = contract_bbq.functions.transfer(recipient_address, Web3.to_wei(amount_in_et
 # 使用钱包对象进行交易签名
 signed_txn = wallet.sign_transaction(tx)
 
-tx_hash = bsc_test.eth.send_raw_transaction(signed_txn.rawTransaction)
+tx_hash = bsc_test.eth.send_raw_transaction(signed_txn.raw_transaction)
 
 print('转账交易已经提交，交易哈希为：', tx_hash.hex())
 balance_bbq = contract_bbq.functions.balanceOf(address).call()

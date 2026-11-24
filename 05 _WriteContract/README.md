@@ -51,7 +51,7 @@ transaction = contract.functions.METHOD_NAME(args).buildTransaction({
 signed_txn = web3.eth.account.sign_transaction(transaction, private_key)
 
 # 发送交易
-tx_hash = web3.eth.send_raw_transaction(signed_txn.rawTransaction)
+tx_hash = web3.eth.send_raw_transaction(signed_txn.raw_transaction)
 
 # 等待链上确认交易
 receipt = web3.eth.wait_for_transaction_receipt(tx_hash)
@@ -199,7 +199,7 @@ BBQ合约是我借鉴了uang合约重新在bsc测试网部署的一个土狗合�
     # 使用钱包对象进行交易签名
     signed_txn = wallet.sign_transaction(tx)
 
-    tx_hash = bsc_test.eth.send_raw_transaction(signed_txn.rawTransaction)
+    tx_hash = bsc_test.eth.send_raw_transaction(signed_txn.raw_transaction)
 
     print('转账交易已经提交，交易哈希为：', tx_hash.hex())
     balance_bbq = contract_bbq.functions.balanceOf(address).call()
