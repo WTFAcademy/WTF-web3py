@@ -1,13 +1,16 @@
+import os
 from eth_account import Account
 from web3 import Web3, contract
 
 # 连接到以太坊节点
-infura_url = "https://goerli.infura.io/v3/22b26b228b004ccc9325066db8b5c468"
+infura_url = os.environ["SEPOLIA_RPC_URL"]
 w3 = Web3(Web3.HTTPProvider(infura_url))
+if w3.eth.chain_id != 11155111:
+    raise RuntimeError("SEPOLIA_RPC_URL must point to Sepolia")
 
 
 # 创建钱包对象
-private_key = "e08ca922fedbc3d37fa677f1d8f7e8fcbe42d031186bcbbc763d20cbdac81f9d"
+private_key = os.environ["TESTNET_PRIVATE_KEY"]
 wallet = Account.from_key(private_key)
 
 abi = [{"inputs": [{"internalType": "string","name": "name_","type": "string"}, {"internalType": "string","name": "symbol_","type": "string"}], "stateMutability": "nonpayable","type": "constructor"}, {"anonymous": False,"inputs": [{"indexed": True,"internalType": "address","name": "owner","type": "address"},{"indexed": True,"internalType": "address","name": "spender","type": "address"},{"indexed": False,"internalType": "uint256","name": "value","type": "uint256"}],"name": "Approval","type": "event"},{"anonymous": False,"inputs": [{"indexed": True,"internalType": "address","name": "from","type": "address"},{"indexed": True,"internalType": "address","name": "to","type": "address"},{"indexed": False,"internalType": "uint256","name": "value","type": "uint256"}],"name": "Transfer","type": "event"},{"inputs": [{"internalType": "address","name": "","type": "address"},{"internalType": "address","name": "","type": "address"}],"name": "allowance","outputs": [{"internalType": "uint256","name": "","type": "uint256"}],"stateMutability": "view","type": "function"},{"inputs": [{"internalType": "address","name": "spender","type": "address"},{"internalType": "uint256","name": "amount","type": "uint256"}],"name": "approve","outputs": [{"internalType": "bool","name": "","type": "bool"}],"stateMutability": "nonpayable","type": "function"},{"inputs": [{"internalType": "address","name": "","type": "address"}],"name": "balanceOf","outputs": [{"internalType": "uint256","name": "","type": "uint256"}],"stateMutability": "view","type": "function"},{"inputs": [{"internalType": "uint256","name": "amount","type": "uint256"}],"name": "burn","outputs": [],"stateMutability": "nonpayable","type": "function"},{"inputs": [],"name": "decimals","outputs": [{"internalType": "uint8","name": "","type": "uint8"}],"stateMutability": "view","type": "function"},{"inputs": [{"internalType": "uint256","name": "amount","type": "uint256"}],"name": "mint","outputs": [],"stateMutability": "nonpayable","type": "function"},{"inputs": [],"name": "name","outputs": [{"internalType": "string","name": "","type": "string"}],"stateMutability": "view","type": "function"},{"inputs": [],"name": "symbol","outputs": [{"internalType": "string","name": "","type": "string"}],"stateMutability": "view","type": "function"},{"inputs": [],"name": "totalSupply","outputs": [{"internalType": "uint256","name": "","type": "uint256"}],"stateMutability": "view","type": "function"},{"inputs": [{"internalType": "address","name": "recipient","type": "address"},{"internalType": "uint256","name": "amount","type": "uint256"}],"name": "transfer","outputs": [{"internalType": "bool","name": "","type": "bool"}],"stateMutability": "nonpayable","type": "function"},{"inputs": [{"internalType": "address","name": "sender","type": "address"},{"internalType": "address","name": "recipient","type": "address"},{"internalType": "uint256","name": "amount","type": "uint256"}],"name": "transferFrom","outputs": [{"internalType": "bool","name": "","type": "bool"}],"stateMutability": "nonpayable","type": "function"}]
@@ -24,9 +27,9 @@ tx_hash = contract_factory.constructor("WTF Token", "WTF").build_transaction({
     'gasPrice': w3.to_wei('50', 'gwei')
 })
 
-signed_tx = wallet.signTransaction(tx_hash)
+signed_tx = wallet.sign_transaction(tx_hash)
 
-tx_hash = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
+tx_hash = w3.eth.send_raw_transaction(signed_tx.raw_transaction)
 tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
 
 # 获取部署的合约地址
@@ -50,9 +53,9 @@ tx_hash = contract_instance.functions.mint(amount).build_transaction({
     'gasPrice': w3.to_wei('50', 'gwei')
 })
 
-signed_tx = wallet.signTransaction(tx_hash)
+signed_tx = wallet.sign_transaction(tx_hash)
 
-tx_hash = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
+tx_hash = w3.eth.send_raw_transaction(signed_tx.raw_transaction)
 tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
 
 print("铸造代币成功")
@@ -67,9 +70,9 @@ tx_hash = contract_instance.functions.transfer("vitalik.eth", 1000).build_transa
     'gasPrice': w3.to_wei('50', 'gwei')
 })
 
-signed_tx = wallet.signTransaction(tx_hash)
+signed_tx = wallet.sign_transaction(tx_hash)
 
-tx_hash = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
+tx_hash = w3.eth.send_raw_transaction(signed_tx.raw_transaction)
 tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
 
 print("等待交易上链")
