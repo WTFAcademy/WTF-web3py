@@ -10,7 +10,7 @@ tags:
 
 # web3.py极简入门: 13. 编码calldata
 
-运行脚本需要 web3.py 7、`SEPOLIA_RPC_URL` 和 `TESTNET_PRIVATE_KEY`。私钥应来自专用测试钱包。 第 13 讲还需要 `SEPOLIA_WETH_ADDRESS`，指向 Sepolia 上的 WETH 合约。
+运行脚本需要 web3.py 8、`SEPOLIA_RPC_URL` 和 `TESTNET_PRIVATE_KEY`。私钥应来自专用测试钱包。 第 13 讲还需要 `SEPOLIA_WETH_ADDRESS`，指向 Sepolia 上的 WETH 合约。
 
 **WTF Academy社群：** [官网 wtf.academy](https://wtf.academy) | [WTF Solidity教程](https://github.com/AmazingAng/WTFSolidity) | [discord](https://discord.gg/5akcruXrsk) | [微信群申请](https://docs.google.com/forms/d/e/1FAIpQLSe4KGT8Sh6sJ7hedQRuIYirOoZK_85miz3dw7vA1-YjodgJ-A/viewform?usp=sf_link)
 

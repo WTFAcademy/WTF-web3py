@@ -70,7 +70,7 @@ transaction = {
 # 2. Sign tx with a private key
 signed = w3.eth.account.sign_transaction(transaction, private_key)
 # 3. Send the signed transaction
-tx_hash = w3.eth.send_raw_transaction(signed.rawTransaction)
+tx_hash = w3.eth.send_raw_transaction(signed.raw_transaction)
 tx = w3.eth.get_transaction(tx_hash)
 assert tx["from"] == acct2.address
 ```

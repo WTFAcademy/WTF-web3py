@@ -35,7 +35,7 @@ tags:
 你可以使用本地`VScode`进行开发。你需要安装[Python](https://www.python.org/downloads/)，以及[Jupyter Notebook]()然后利用包管理工具`pip`安装`web3.py`库：
 
 ```shell
-pip install web3
+pip install web3==8.0.0
 ```
 
 ### 2. Colab
@@ -57,7 +57,7 @@ pip install web3
 
 **注意**：在`Colab`上第一次运行可能会提示`ModuleNotFoundError: No module named 'web3'`，这是因为`web3.py`库还没有安装，只需要在任意一个Cell，输入下列指令运行安装即可。
 ```shell
-pip install web3
+pip install web3==8.0.0
 ```
 
 

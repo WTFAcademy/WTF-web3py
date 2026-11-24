@@ -28,16 +28,16 @@ tags:
 在 `web3.py`中，事件的监听需要通过过滤器 `filter`来完成，过滤器的详细介绍可以参见下一节，本节只介绍如何通过 `web3.contract.ContractEvents`对象创建事件过滤器
 
 ```PYTHON
-eventFilter = 合约实例.events.事件名称.create_filter(fromBlock=起始区块,toBlock = 终止区块, argument_filters = 事件参数键值对, topics = 主题集过滤条件)
+eventFilter = 合约实例.events.事件名称.create_filter(from_block=起始区块,to_block = 终止区块, argument_filters = 事件参数键值对, topics = 主题集过滤条件)
 ```
 
-`create_filter()`包含四个参数，分别是起始区块 `fromBlock`（必填），结束区块 `toBlock`（选填），事件参数键值对 `argument_filters`（选填），主题集过滤条件 `topics`（选填）
+`create_filter()`包含四个参数，分别是起始区块 `from_block`（必填），结束区块 `to_block`（选填），事件参数键值对 `argument_filters`（选填），主题集过滤条件 `topics`（选填）
 
-- `fromBlock`和 `toBlock`可以是区块编号，也可以是字符串 `latest`（区块链的当前最新块），`earliest`（创世块），`pending`（正在挖掘的块），后续例子中我们将使用 `pending`来进行事件的实时监听。
+- `from_block`和 `to_block`可以是区块编号，也可以是字符串 `latest`（区块链的当前最新块），`earliest`（创世块），`pending`（正在挖掘的块），后续例子中我们将使用 `pending`来进行事件的实时监听。
 - `argument_filters`针对事件参数，对检索结果进行过滤。
 - `topics`针对事件主题集进行过滤，关于该参数的使用，可以参考[Ethers极简入门: 8. 监听合约事件](https://github.com/WTFAcademy/WTF-Ethers/tree/main/09_EventFilter)中的介绍
 
-**注意**：起始区块 `fromBlock`是必填项。
+**注意**：起始区块 `from_block`是必填项。
 
 ## 利用事件过滤器接口监听事件
 
@@ -81,7 +81,7 @@ contractABI = '[{"constant":true,"inputs":[],"name":"name","outputs"...后面太
 # 创建合约实例
 USDTcontract = Provider.eth.contract(address = contractAddress, abi = contractABI)
 # 创建事件过滤器实例
-event_filter = USDTcontract.events.Transfer.create_filter(fromBlock="pending",toBlock="pending")
+event_filter = USDTcontract.events.Transfer.create_filter(from_block="pending",to_block="pending")
 ```
 
 4. 监听 `USDT`合约的 `Transfer`事件

@@ -46,10 +46,10 @@ event Transfer(address indexed from, address indexed to, uint256 amount);
 `web3.py`中，通过 `web3.contract.ContractEvents`类，我们可以与合约中指定的事件进行交互，其中的 `get_logs()`方法提供了读取合约释放事件的接口，我们可以通过 `Contract`类的 `events`属性来得到指定合约的 `ContractEvents`实例，进而针对不同的事件调用 `get_logs()`进行检索，具体用法如下：
 
 ```python
-eventsLog = 合约实例.events.事件名.get_logs(fromBlock = 起始区块, toBlock = 结束区块, argument_filters = 事件参数键值对)
+eventsLog = 合约实例.events.事件名.get_logs(from_block = 起始区块, to_block = 结束区块, argument_filters = 事件参数键值对)
 ```
 
-其中事件名代表要检索的事件名称；`get_logs()`包含3个参数，分别是起始区块 `fromBlock`（选填），结束区块 `toBlock`（选填），事件参数键值对 `argument_filters`（选填），其中 `argument_filters`针对事件参数对检索结果进行过滤；检索结果会以 `元组（tuple）`的方式返回，每个元素对应一次事件释放的信息。
+其中事件名代表要检索的事件名称；`get_logs()`包含3个参数，分别是起始区块 `from_block`（选填），结束区块 `to_block`（选填），事件参数键值对 `argument_filters`（选填），其中 `argument_filters`针对事件参数对检索结果进行过滤；检索结果会以 `元组（tuple）`的方式返回，每个元素对应一次事件释放的信息。
 
 **注意**：要检索的事件必须包含在合约的 `abi`中。
 
@@ -90,7 +90,7 @@ abiWETH = '[{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","ty
    block = Provider.eth.block_number
    print(f"当前区块高度：{block}")
    print("打印事件详情：")
-   logs = WETHcontract.events.Transfer.get_logs(fromBlock=block-10, toBlock=block)
+   logs = WETHcontract.events.Transfer.get_logs(from_block=block-10, to_block=block)
    print(logs[0])
    ```
 
@@ -108,7 +108,7 @@ abiWETH = '[{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","ty
 
    ```PYTHON
    # 读取所有src地址为指定地址的Transfer事件，输出解析后的事件
-   filteredLogs = WETHcontract.events.Transfer.get_logs(fromBlock=block-10, toBlock=block,argument_filters={'src':logs[0].args.src})
+   filteredLogs = WETHcontract.events.Transfer.get_logs(from_block=block-10, to_block=block,argument_filters={'src':logs[0].args.src})
    print("打印从指定地址出发的Transfer事件详情：")
    for l in filteredLogs:
        print(f"地址{l.args.src} 转账 {Provider.from_wei(l.args.wad, 'ether')} WETH 到地址{l.args.dst}")

@@ -1,4 +1,6 @@
 # WTF web3py
+
+本教程使用 Python 3.11+ 和 web3.py 8。在仓库根目录运行 `python -m pip install -r requirements.txt`。含 `EthereumTesterProvider` 的示例可在本地运行。
 我们最近在重新学web3py，巩固一下细节，也写一个“WTF web3py极简入门”，供小白们使用，每周更新1-3讲。
 
 Lead by PKU Blockchain.
